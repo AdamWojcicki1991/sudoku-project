@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+
+group = 'com.sudoku'
+version = '1.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation(group: 'junit', name: 'junit', version: '4.13')
+    testImplementation(group: 'org.mockito', name: 'mockito-all', version: '1.10.19')
+}
+
+javafx {
+    version = "11.0.2"
+    modules = ['javafx.controls', 'javafx.graphics', 'javafx.fxml', 'javafx.swing', 'javafx.base']
+}
+
+mainClassName = 'com.sudoku.SudokuApplication'
