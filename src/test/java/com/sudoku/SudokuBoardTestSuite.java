@@ -1,5 +1,6 @@
 package com.sudoku;
 
+import com.sudoku.engine.SudokuBoard;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -7,7 +8,7 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
-public class SudokuTestSuite {
+public class SudokuBoardTestSuite {
     private static int testCounter;
 
     @BeforeClass
@@ -29,9 +30,9 @@ public class SudokuTestSuite {
     @Test
     public void shouldReadNumberFromBoard() {
         //GIVEN
-        Sudoku sudoku = new Sudoku();
+        SudokuBoard sudokuBoard = new SudokuBoard();
         //WHEN
-        int number = sudoku.getNumber(3, 3);
+        int number = sudokuBoard.getNumber(3, 3);
         //THEN
 //        assertEquals(0, number);
     }
@@ -39,19 +40,20 @@ public class SudokuTestSuite {
     @Test
     public void shouldPlaceNumberOnBoard() {
         //GIVEN
-        Sudoku sudoku = new Sudoku();
+        SudokuBoard sudokuBoard = new SudokuBoard();
         //WHEN
-        sudoku.setNumber(3, 3, 9);
+        sudokuBoard.setNumber(3, 3, 9);
         //THEN
+        assertEquals(9, sudokuBoard.getNumber(3, 3));
     }
 
     @Test
     public void shouldReadWhatWasPlaced() {
         //GIVEN
-        Sudoku sudoku = new Sudoku();
-        sudoku.setNumber(3, 3, 9);
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        sudokuBoard.setNumber(3, 3, 9);
         //WHEN
-        int number = sudoku.getNumber(3, 3);
+        int number = sudokuBoard.getNumber(3, 3);
         //THEN
         assertEquals(9, number);
     }

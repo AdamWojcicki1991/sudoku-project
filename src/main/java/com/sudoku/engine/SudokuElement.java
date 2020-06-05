@@ -1,7 +1,7 @@
-package com.sudoku;
+package com.sudoku.engine;
 
 public class SudokuElement {
-    public static final int EMPTY = -1;
+    private static final int EMPTY = -1;
     private int value = EMPTY;
 
     public int getValue() {
