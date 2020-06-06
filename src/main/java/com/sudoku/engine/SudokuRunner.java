@@ -1,23 +1,28 @@
 package com.sudoku.engine;
 
-import com.sudoku.UI.UserInterface;
+import com.sudoku.UI.controller.UserController;
 import com.sudoku.model.GameResult;
+import com.sudoku.strategy.PlayerStrategy;
+import com.sudoku.strategy.Strategy;
 
-import static com.sudoku.model.GameResult.NEXT_GAME;
+import static com.sudoku.UI.UserInterface.printThanksForGame;
+import static com.sudoku.model.GameResult.NEXT;
 
 public final class SudokuRunner {
-    private final UserInterface userInterface;
+    private final UserController userController;
+    private final Strategy strategy;
 
-    public SudokuRunner(final UserInterface userInterface) {
-        this.userInterface = userInterface;
+    public SudokuRunner(final UserController userController) {
+        this.userController = userController;
+        this.strategy = new PlayerStrategy(userController);
     }
 
     public void run() {
-        SudokuGame sudokuGame = new SudokuGame(userInterface);
-        GameResult gameResult = NEXT_GAME;
-        while (gameResult == NEXT_GAME) {
-            gameResult = new SudokuGame(userInterface).start();
+        SudokuGame sudokuGame = new SudokuGame(userController, strategy);
+        GameResult gameResult = sudokuGame.start();
+        while (gameResult == NEXT) {
+            gameResult = new SudokuGame(userController, strategy).start();
         }
-        userInterface.printThanksForGame(sudokuGame.getPlayerName());
+        printThanksForGame(sudokuGame.getSudokuDefinition().getUserName());
     }
 }

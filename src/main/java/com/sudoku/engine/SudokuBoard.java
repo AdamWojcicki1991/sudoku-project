@@ -3,6 +3,8 @@ package com.sudoku.engine;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sudoku.engine.SudokuElement.EMPTY;
+
 public class SudokuBoard {
     private List<SudokuRow> rows = new ArrayList<>();
 
@@ -12,18 +14,55 @@ public class SudokuBoard {
         }
     }
 
-    public int getNumber(int x, int y) {
-        return rows.get(y).getColumns().get(x).getValue();
+    public int getNumber(int columnNumber, int rowNumber) {
+        return rows.get(rowNumber).getColumns().get(columnNumber).getValue();
     }
 
-    public void setNumber(int x, int y, int value) {
-        rows.get(y).getColumns().get(x).setValue(value);
+    public void setNumber(int columnNumber, int rowNumber, int value) {
+        if (isValidNumberPlaced(columnNumber, rowNumber, value)) {
+            rows.get(rowNumber).getColumns().get(columnNumber).setValue(value);
+        }
+    }
+
+    public boolean isCellEmpty(int columnNumber, int rowNumber) {
+        return rows.get(rowNumber).getColumns().get(columnNumber).getValue() == EMPTY;
+    }
+
+    private boolean isValidNumberPlacedInRow(int columnNumber, int rowNumber, int value) {
+        for (int i = 0; i < 9; i++) {
+            if (rows.get(rowNumber).getColumns().get(i).getValue() == value && columnNumber != i) return false;
+        }
+        return true;
+    }
+
+    private boolean isValidNumberPlacedInColumn(int columnNumber, int rowNumber, int value) {
+        for (int i = 0; i < 9; i++) {
+            if (rows.get(i).getColumns().get(columnNumber).getValue() == value && rowNumber != i) return false;
+        }
+        return true;
+    }
+
+    private boolean isValidNumberPlacedInBox(int columnNumber, int rowNumber, int value) {
+        int boxRow = rowNumber / 3;
+        int boxColumn = columnNumber / 3;
+
+        for (int i = boxColumn * 3; i < boxColumn * 3 + 3; i++) {
+            for (int j = boxRow * 3; j < boxRow * 3 + 3; j++) {
+                if (rows.get(i).getColumns().get(j).getValue() == value && rowNumber != i && columnNumber != j)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isValidNumberPlaced(int columnNumber, int rowNumber, int value) {
+        return isValidNumberPlacedInRow(columnNumber, rowNumber, value) &&
+                isValidNumberPlacedInColumn(columnNumber, rowNumber, value) &&
+                isValidNumberPlacedInBox(columnNumber, rowNumber, value);
     }
 
     @Override
     public String toString() {
-        return "SudokuBoard{" +
-                "rows=" + rows +
-                '}';
+        return "  " + rows + "\n";
     }
 }
