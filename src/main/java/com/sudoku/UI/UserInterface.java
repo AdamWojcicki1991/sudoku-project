@@ -7,7 +7,7 @@ public interface UserInterface {
     static void printMainMenu() {
         System.out.println("######################################################  WELCOME IN SUDOKU SOLVER ########################################################");
         System.out.println("Key 1 - 9 - Use it to put valid number in Sudoku cell");
-        System.out.println("Sign * - In Sudoku board means that this cell is empty and you can put a value from keyboard to this cell");
+        System.out.println("Sign ' ,' - In Sudoku board means that this cell is empty and you can put a value from keyboard to this cell");
         System.out.println("#########################################################################################################################################\n");
     }
 
@@ -20,6 +20,12 @@ public interface UserInterface {
 
     static void printSolvedSudokuBoard(SudokuBoard sudokuBoard) {
         System.out.println("############################################################ SOLVED SUDOKU ##############################################################\n");
+        System.out.println(sudokuBoard.toString());
+        System.out.println("#########################################################################################################################################\n");
+    }
+
+    static void printUnsolvedSudokuBoard(SudokuBoard sudokuBoard) {
+        System.out.println("########################################################### UNSOLVED SUDOKU #############################################################\n");
         System.out.println(sudokuBoard.toString());
         System.out.println("#########################################################################################################################################\n");
     }

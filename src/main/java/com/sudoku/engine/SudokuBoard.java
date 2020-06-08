@@ -19,13 +19,21 @@ public class SudokuBoard {
     }
 
     public void setNumber(int columnNumber, int rowNumber, int value) {
-        if (isValidNumberPlaced(columnNumber, rowNumber, value)) {
-            rows.get(rowNumber).getColumns().get(columnNumber).setValue(value);
-        }
+        rows.get(rowNumber).getColumns().get(columnNumber).setValue(value);
+    }
+
+    public List<Integer> getPossibles(int columnNumber, int rowNumber) {
+        return rows.get(rowNumber).getColumns().get(columnNumber).getPossibles();
     }
 
     public boolean isCellEmpty(int columnNumber, int rowNumber) {
         return rows.get(rowNumber).getColumns().get(columnNumber).getValue() == EMPTY;
+    }
+
+    public boolean isValidNumberPlaced(int columnNumber, int rowNumber, int value) {
+        return isValidNumberPlacedInRow(columnNumber, rowNumber, value) &&
+                isValidNumberPlacedInColumn(columnNumber, rowNumber, value) &&
+                isValidNumberPlacedInBox(columnNumber, rowNumber, value);
     }
 
     private boolean isValidNumberPlacedInRow(int columnNumber, int rowNumber, int value) {
@@ -53,12 +61,6 @@ public class SudokuBoard {
             }
         }
         return true;
-    }
-
-    public boolean isValidNumberPlaced(int columnNumber, int rowNumber, int value) {
-        return isValidNumberPlacedInRow(columnNumber, rowNumber, value) &&
-                isValidNumberPlacedInColumn(columnNumber, rowNumber, value) &&
-                isValidNumberPlacedInBox(columnNumber, rowNumber, value);
     }
 
     @Override

@@ -7,10 +7,11 @@ import com.sudoku.model.SudokuResult;
 import com.sudoku.strategy.Strategy;
 
 import static com.sudoku.UI.UserInterface.printSolvedSudokuBoard;
+import static com.sudoku.UI.UserInterface.printUnsolvedSudokuBoard;
 import static com.sudoku.model.GameResult.END;
 import static com.sudoku.model.GameResult.NEXT;
 import static com.sudoku.model.PromptType.NAME;
-import static com.sudoku.model.SudokuResult.UNSOLVED;
+import static com.sudoku.model.SudokuResult.SOLVED;
 
 public final class SudokuGame {
     private final UserController userController;
@@ -25,11 +26,12 @@ public final class SudokuGame {
 
     public GameResult start() {
         sudokuDefinition = fillSudokuBoard(sudokuDefinition);
-        SudokuResult sudokuResult = UNSOLVED;
-        while (sudokuResult == UNSOLVED) {
-            sudokuResult = new SudokuSolver().resolveSudoku(sudokuDefinition.getSudokuBoard());
+        SudokuResult sudokuResult = new SudokuSolver().resolveSudoku(sudokuDefinition.getSudokuBoard());
+        if (sudokuResult == SOLVED) {
+            printSolvedSudokuBoard(sudokuDefinition.getSudokuBoard());
+        } else {
+            printUnsolvedSudokuBoard(sudokuDefinition.getSudokuBoard());
         }
-        printSolvedSudokuBoard(sudokuDefinition.getSudokuBoard());
         return (userController.confirmGameResult()) ? NEXT : END;
     }
 
