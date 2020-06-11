@@ -5,6 +5,10 @@ import com.sudoku.engine.SudokuRunner;
 
 public final class SudokuApplication {
     public static void main(String[] args) {
-        new SudokuRunner(new SudokuUserController()).run();
+        try {
+            new SudokuRunner(new SudokuUserController()).run();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
     }
 }

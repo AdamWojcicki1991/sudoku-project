@@ -34,17 +34,12 @@ public interface UserInterface {
         System.out.println(sudokuBoard.toString());
     }
 
+    static void printMessageInvalidSudoku() {
+        System.out.println("Sudoku entered is invalid");
+    }
+
     static void printPrompt(PromptType promptType) {
         switch (promptType) {
-            case ROW:
-                System.out.println("Type ROW number: ");
-                break;
-            case COLUMN:
-                System.out.println("Type COLUMN number: ");
-                break;
-            case VALUE:
-                System.out.println("Type VALUE you want to put to the cell: ");
-                break;
             case NAME:
                 System.out.println("Type player name and press ENTER: ");
                 break;
@@ -59,7 +54,7 @@ public interface UserInterface {
     }
 
     static void printValidCharacters() {
-        System.out.println("Type a valid character '1' - '9' and press ENTER: ");
+        System.out.println("Type value (rcv) : legend r-row(0-8), c-column(0-8), v-value(1-9 or 0 to set empty cell) : ");
     }
 
     static void printErrorMessage() {

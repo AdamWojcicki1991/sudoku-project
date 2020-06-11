@@ -3,11 +3,11 @@ package com.sudoku.engine;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sudoku.engine.SudokuSolver.SIZE;
+import static com.sudoku.engine.SudokuBoard.SIZE;
 
 public class SudokuElement {
     private static int element = -1;
-    static final int EMPTY = -1;
+    static final int EMPTY = 0;
     private int value = EMPTY;
     private List<Integer> possibles = new ArrayList<>();
 
