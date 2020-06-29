@@ -252,50 +252,6 @@ public class SudokuBoardTestSuite {
     public void shouldResolveSudokuLevelHard() {
         //GIVEN
         SudokuBoard sudokuBoard = new SudokuBoard();
-        sudokuBoard.setValue(0, 0, 3);
-        sudokuBoard.setValue(2, 0, 4);
-        sudokuBoard.setValue(4, 0, 2);
-        sudokuBoard.setValue(2, 1, 1);
-        sudokuBoard.setValue(4, 1, 9);
-        sudokuBoard.setValue(5, 1, 4);
-        sudokuBoard.setValue(8, 1, 7);
-        sudokuBoard.setValue(0, 2, 9);
-        sudokuBoard.setValue(3, 2, 5);
-        sudokuBoard.setValue(5, 2, 7);
-        sudokuBoard.setValue(0, 3, 7);
-        sudokuBoard.setValue(1, 3, 5);
-        sudokuBoard.setValue(4, 3, 1);
-        sudokuBoard.setValue(5, 3, 3);
-        sudokuBoard.setValue(0, 4, 1);
-        sudokuBoard.setValue(2, 4, 2);
-        sudokuBoard.setValue(5, 4, 8);
-        sudokuBoard.setValue(6, 4, 3);
-        sudokuBoard.setValue(5, 6, 5);
-        sudokuBoard.setValue(6, 6, 4);
-        sudokuBoard.setValue(3, 7, 1);
-        sudokuBoard.setValue(8, 7, 9);
-        sudokuBoard.setValue(0, 8, 2);
-        sudokuBoard.setValue(1, 8, 3);
-        sudokuBoard.setValue(3, 8, 4);
-        sudokuBoard.setValue(6, 8, 7);
-        SudokuSolver sudokuSolver = new SudokuSolver();
-        SudokuResult sudokuResult = null;
-        printSudokuBoard(sudokuBoard);
-        //WHEN
-        try {
-            sudokuResult = sudokuSolver.resolveSudoku(sudokuBoard);
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
-        printSudokuBoard(sudokuSolver.getResolvedSudoku());
-        //THEN
-        assertEquals(SOLVED, sudokuResult);
-    }
-
-    @Test
-    public void shouldNotResolveSudoku() {
-        //GIVEN
-        SudokuBoard sudokuBoard = new SudokuBoard();
         sudokuBoard.setValue(8, 1, 4);
         sudokuBoard.setValue(8, 2, 5);
         sudokuBoard.setValue(0, 3, 3);
@@ -315,8 +271,6 @@ public class SudokuBoardTestSuite {
         sudokuBoard.setValue(1, 8, 9);
         sudokuBoard.setValue(2, 8, 5);
         sudokuBoard.setValue(3, 8, 8);
-        sudokuBoard.setValue(5, 8, 3);
-        sudokuBoard.setValue(7, 8, 7);
         SudokuSolver sudokuSolver = new SudokuSolver();
         SudokuResult sudokuResult = null;
         printSudokuBoard(sudokuBoard);

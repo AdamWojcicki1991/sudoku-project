@@ -82,9 +82,9 @@ public class SudokuBoard extends Prototype {
         int boxRow = rowNumber / 3;
         int boxColumn = columnNumber / 3;
 
-        for (int i = boxColumn * 3; i < boxColumn * 3 + 3; i++) {
-            for (int j = boxRow * 3; j < boxRow * 3 + 3; j++) {
-                if (rows.get(i).getColumns().get(j).getValue() == value)
+        for (int col = boxColumn * 3; col < boxColumn * 3 + 3; col++) {
+            for (int row = boxRow * 3; row < boxRow * 3 + 3; row++) {
+                if (rows.get(row).getColumns().get(col).getValue() == value)
                     return true;
             }
         }

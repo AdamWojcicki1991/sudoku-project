@@ -12,7 +12,7 @@ public class SudokuUserController implements UserController {
     public String enterData(PromptType promptType) {
         if (promptType == NAME) printMainMenu();
         printPrompt(promptType);
-        return SCANNER.nextLine();
+        return SCANNER.next();
     }
 
     @Override
@@ -37,6 +37,7 @@ public class SudokuUserController implements UserController {
         String confirm = "";
         SudokuBoard sudokuBoard = new SudokuBoard();
         while (!confirm.equals("sudoku")) {
+            SCANNER.nextLine();
             sudokuBoard.setValue(UserDialogs.getCellValue());
             printSudokuBoard(sudokuBoard);
             confirm = enterData(CONFIRM).toLowerCase();

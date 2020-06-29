@@ -31,10 +31,7 @@ public class SudokuSolver {
                     SudokuBoard sudokuBoardCopy = sudokuBoard.deepCopy();
                     sudokuBoardCopy.setValue(cell.getCol(), cell.getRow(), value);
                     sudokuBoardCopy.getPossibles(cell.getCol(), cell.getRow()).remove(value);
-                    if (resolveSudoku(sudokuBoardCopy) == SOLVED) {
-                        resolvedSudoku = sudokuBoardCopy;
-                        return SOLVED;
-                    }
+                    if (resolveSudoku(sudokuBoardCopy) == SOLVED) return SOLVED;
                 }
             }
             return UNSOLVED;
@@ -62,8 +59,10 @@ public class SudokuSolver {
         for (int col = 0; col < SIZE; col++) {
             for (int row = 0; row < SIZE; row++) {
                 if (sudokuBoard.getPossibles(col, row).size() == 1 && sudokuBoard.isCellEmpty(col, row)) {
-                    sudokuBoard.setValue(col, row, sudokuBoard.getPossibles(col, row).get(0));
-                    changed = true;
+                    if (sudokuBoard.canPlacedValue(col, row, sudokuBoard.getPossibles(col, row).get(0))) {
+                        sudokuBoard.setValue(col, row, sudokuBoard.getPossibles(col, row).get(0));
+                        changed = true;
+                    }
                 }
             }
         }

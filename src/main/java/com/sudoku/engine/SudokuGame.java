@@ -17,11 +17,10 @@ public final class SudokuGame {
 
     public SudokuGame(final UserController userController) {
         this.userController = userController;
-        this.sudokuDefinition = new SudokuDefinition(userController.enterData(NAME), new SudokuBoard());
     }
 
     public GameResult start() throws CloneNotSupportedException {
-        sudokuDefinition = fillSudokuBoard(sudokuDefinition);
+        sudokuDefinition = createSudokuDefinition();
         SudokuSolver sudokuSolver = new SudokuSolver();
         if (sudokuSolver.resolveSudoku(sudokuDefinition.getSudokuBoard()) == SOLVED) {
             printSolvedSudokuBoard(sudokuSolver.getResolvedSudoku());
@@ -35,8 +34,9 @@ public final class SudokuGame {
         return sudokuDefinition;
     }
 
-    private SudokuDefinition fillSudokuBoard(SudokuDefinition sudokuDefinition) {
+    private SudokuDefinition createSudokuDefinition() {
+        String userName = userController.enterData(NAME);
         SudokuBoard sudokuBoardWithValues = userController.putValuesOnSudokuBoard();
-        return new SudokuDefinition(sudokuDefinition.getUserName(), sudokuBoardWithValues);
+        return new SudokuDefinition(userName, sudokuBoardWithValues);
     }
 }

@@ -16,6 +16,7 @@ public final class SudokuRunner {
     public void run() throws CloneNotSupportedException {
         SudokuGame sudokuGame = new SudokuGame(userController);
         GameResult gameResult = sudokuGame.start();
+
         while (gameResult == NEXT) {
             gameResult = new SudokuGame(userController).start();
         }

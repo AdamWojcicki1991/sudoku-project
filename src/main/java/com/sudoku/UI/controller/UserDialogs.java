@@ -15,7 +15,7 @@ public class UserDialogs {
                 int row = Integer.parseInt(s.substring(0, 1));
                 int col = Integer.parseInt(s.substring(1, 2));
                 int value = Integer.parseInt(s.substring(2, 3));
-                if (row <= 8 && col <= 8 && (value >= 1 || value == 0) && s.length() == 3) {
+                if (row <= 8 && col <= 8 && value >= 0 && s.length() == 3) {
                     return new Coords(row, col, value);
                 } else {
                     printErrorMessage();
