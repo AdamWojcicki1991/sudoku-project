@@ -41,6 +41,10 @@ public class SudokuUserController implements UserController {
             sudokuBoard.setValue(UserDialogs.getCellValue());
             printSudokuBoard(sudokuBoard);
             confirm = enterData(CONFIRM).toLowerCase();
+            if (confirm.equals("x")) {
+                sudokuBoard.setForceExit(true);
+                break;
+            }
         }
         return sudokuBoard;
     }

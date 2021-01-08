@@ -21,12 +21,12 @@ public class SudokuRow {
     public String toString() {
         row++;
         if (row == 0) {
-            return "+----------+----------+---------+]\n, " + columns + "\n";
+            return "|----------+----------+---------|]\n, " + columns + "\n";
         } else if (row == 3 || row == 6) {
-            return "[+----------+----------+---------+]\n, " + columns + "\n";
+            return "[|----------+----------+---------|]\n, " + columns + "\n";
         } else if (row == 8) {
             row = -1;
-            return columns + "\n, [+----------+----------+---------+";
+            return columns + "\n, [|----------+----------+---------|";
         }
         return columns + "\n";
     }

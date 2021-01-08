@@ -13,7 +13,7 @@ public final class SudokuRunner {
         this.userController = userController;
     }
 
-    public void run() throws CloneNotSupportedException {
+    public void run() {
         SudokuGame sudokuGame = new SudokuGame(userController);
         GameResult gameResult = sudokuGame.start();
 

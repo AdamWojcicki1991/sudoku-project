@@ -7,6 +7,16 @@ version '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+jar {
+    archiveName("Sudoku.jar")
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes(
+                'Main-Class': 'com.sudoku.SudokuApplication'
+        )
+    }
+}
+
 repositories {
     mavenCentral()
 }

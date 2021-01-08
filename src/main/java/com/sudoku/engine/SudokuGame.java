@@ -4,8 +4,7 @@ import com.sudoku.UI.controller.UserController;
 import com.sudoku.model.GameResult;
 import com.sudoku.model.SudokuDefinition;
 
-import static com.sudoku.UI.UserInterface.printSolvedSudokuBoard;
-import static com.sudoku.UI.UserInterface.printUnsolvedSudokuBoard;
+import static com.sudoku.UI.UserInterface.*;
 import static com.sudoku.model.GameResult.END;
 import static com.sudoku.model.GameResult.NEXT;
 import static com.sudoku.model.PromptType.NAME;
@@ -19,10 +18,12 @@ public final class SudokuGame {
         this.userController = userController;
     }
 
-    public GameResult start() throws CloneNotSupportedException {
+    public GameResult start() {
         sudokuDefinition = createSudokuDefinition();
         SudokuSolver sudokuSolver = new SudokuSolver();
-        if (sudokuSolver.resolveSudoku(sudokuDefinition.getSudokuBoard()) == SOLVED) {
+        if (sudokuDefinition.getSudokuBoard().isExitForced()) {
+            printThanksForGame(sudokuDefinition.getUserName());
+        } else if (sudokuSolver.resolveSudoku(sudokuDefinition.getSudokuBoard()) == SOLVED) {
             printSolvedSudokuBoard(sudokuSolver.getResolvedSudoku());
         } else {
             printUnsolvedSudokuBoard(sudokuSolver.getResolvedSudoku());

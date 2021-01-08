@@ -34,17 +34,13 @@ public interface UserInterface {
         System.out.println(sudokuBoard.toString());
     }
 
-    static void printMessageInvalidSudoku() {
-        System.out.println("Sudoku entered is invalid");
-    }
-
     static void printPrompt(PromptType promptType) {
         switch (promptType) {
             case NAME:
                 System.out.println("Type player name and press ENTER: ");
                 break;
             case CONFIRM:
-                System.out.println("Type 'sudoku' to solve SUDOKU or type something else to continue filling SUDOKU and press ENTER: ");
+                System.out.println("Type 'sudoku' to solve SUDOKU, type 'x' to EXIT GAME or type something else to continue filling SUDOKU and press ENTER: ");
                 break;
         }
     }

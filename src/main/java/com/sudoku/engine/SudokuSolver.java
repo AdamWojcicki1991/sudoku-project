@@ -14,7 +14,11 @@ import static com.sudoku.model.SudokuResult.UNSOLVED;
 public class SudokuSolver {
     private SudokuBoard resolvedSudoku;
 
-    public SudokuResult resolveSudoku(SudokuBoard sudokuBoard) throws CloneNotSupportedException {
+    public SudokuResult resolveSudoku(SudokuBoard sudokuBoard) {
+        if (!sudokuBoard.isSudokuBoardValid(sudokuBoard)) {
+            resolvedSudoku = sudokuBoard;
+            return UNSOLVED;
+        }
         boolean changed = true;
         while (changed) {
             resolveStageOne(sudokuBoard);
@@ -25,7 +29,10 @@ public class SudokuSolver {
             return SOLVED;
         } else {
             List<Coords> emptyCells = getUnsolvedCells(sudokuBoard);
-            if (emptyCells.size() < 2) return UNSOLVED;
+            if (emptyCells.size() < 2) {
+                resolvedSudoku = sudokuBoard;
+                return UNSOLVED;
+            }
             for (Coords cell : emptyCells) {
                 for (Integer value : sudokuBoard.getPossibles(cell.getCol(), cell.getRow())) {
                     SudokuBoard sudokuBoardCopy = sudokuBoard.deepCopy();

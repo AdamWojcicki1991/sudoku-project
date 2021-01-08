@@ -10,8 +10,10 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static com.sudoku.DataFixture.*;
 import static com.sudoku.UI.UserInterface.printSudokuBoard;
 import static com.sudoku.model.SudokuResult.SOLVED;
+import static com.sudoku.model.SudokuResult.UNSOLVED;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -67,6 +69,56 @@ public class SudokuBoardTestSuite {
     }
 
     @Test
+    public void shouldValidateDuplicateNumbersInBoxOfSudokuBoard() {
+        //GIVEN
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        sudokuBoard.setValue(1, 3, 9);
+        sudokuBoard.setValue(2, 4, 9);
+        printSudokuBoard(sudokuBoard);
+        //WHEN
+        boolean isSudokuBoardValid = sudokuBoard.isSudokuBoardValid(sudokuBoard);
+        //THEN
+        assertFalse(isSudokuBoardValid);
+    }
+
+    @Test
+    public void shouldValidateDuplicateNumbersInRowOfSudokuBoard() {
+        //GIVEN
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        sudokuBoard.setValue(1, 4, 9);
+        sudokuBoard.setValue(7, 4, 9);
+        printSudokuBoard(sudokuBoard);
+        //WHEN
+        boolean isSudokuBoardValid = sudokuBoard.isSudokuBoardValid(sudokuBoard);
+        //THEN
+        assertFalse(isSudokuBoardValid);
+    }
+
+    @Test
+    public void shouldValidateDuplicateNumbersInColumnOfSudokuBoard() {
+        //GIVEN
+        SudokuBoard sudokuBoard = new SudokuBoard();
+        sudokuBoard.setValue(4, 0, 9);
+        sudokuBoard.setValue(4, 4, 9);
+        printSudokuBoard(sudokuBoard);
+        //WHEN
+        boolean isSudokuBoardValid = sudokuBoard.isSudokuBoardValid(sudokuBoard);
+        //THEN
+        assertFalse(isSudokuBoardValid);
+    }
+
+    @Test
+    public void shouldValidateSudokuBoardWithoutAnyDuplicates() {
+        //GIVEN
+        SudokuBoard sudokuBoard = createSimpleSudokuBoard();
+        printSudokuBoard(sudokuBoard);
+        //WHEN
+        boolean isSudokuBoardValid = sudokuBoard.isSudokuBoardValid(sudokuBoard);
+        //THEN
+        assertTrue(isSudokuBoardValid);
+    }
+
+    @Test
     public void shouldValidatePlacedValue() {
         //GIVEN
         SudokuBoard sudokuBoard = new SudokuBoard();
@@ -113,11 +165,7 @@ public class SudokuBoardTestSuite {
         //GIVEN
         SudokuBoard sudokuBoard = new SudokuBoard();
         SudokuBoard shallowClonedSudokuBoard = null;
-        try {
-            shallowClonedSudokuBoard = sudokuBoard.shallowCopy();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        shallowClonedSudokuBoard = sudokuBoard.shallowCopy();
         //WHEN
         shallowClonedSudokuBoard.setValue(1, 1, 1);
         //THEN
@@ -132,11 +180,7 @@ public class SudokuBoardTestSuite {
         //GIVEN
         SudokuBoard sudokuBoard = new SudokuBoard();
         SudokuBoard deepClonedSudokuBoard = null;
-        try {
-            deepClonedSudokuBoard = sudokuBoard.deepCopy();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        deepClonedSudokuBoard = sudokuBoard.deepCopy();
         //WHEN
         deepClonedSudokuBoard.setValue(1, 1, 1);
         //THEN
@@ -147,139 +191,52 @@ public class SudokuBoardTestSuite {
     }
 
     @Test
-    public void shouldResolveSudoku() {
+    public void shouldNotResolveInvalidSudokuBoard() {
         //GIVEN
-        SudokuBoard sudokuBoard = new SudokuBoard();
-        sudokuBoard.setValue(0, 0, 2);
-        sudokuBoard.setValue(1, 0, 6);
-        sudokuBoard.setValue(3, 0, 5);
-        sudokuBoard.setValue(6, 0, 3);
-        sudokuBoard.setValue(8, 0, 1);
-        sudokuBoard.setValue(1, 1, 7);
-        sudokuBoard.setValue(4, 1, 6);
-        sudokuBoard.setValue(6, 1, 9);
-        sudokuBoard.setValue(1, 2, 4);
-        sudokuBoard.setValue(2, 2, 5);
-        sudokuBoard.setValue(4, 2, 1);
-        sudokuBoard.setValue(8, 2, 8);
-        sudokuBoard.setValue(2, 3, 6);
-        sudokuBoard.setValue(3, 3, 8);
-        sudokuBoard.setValue(5, 3, 1);
-        sudokuBoard.setValue(7, 3, 3);
-        sudokuBoard.setValue(8, 3, 9);
-        sudokuBoard.setValue(0, 4, 7);
-        sudokuBoard.setValue(1, 4, 3);
-        sudokuBoard.setValue(7, 4, 1);
-        sudokuBoard.setValue(8, 4, 4);
-        sudokuBoard.setValue(0, 5, 9);
-        sudokuBoard.setValue(1, 5, 1);
-        sudokuBoard.setValue(3, 5, 7);
-        sudokuBoard.setValue(5, 5, 5);
-        sudokuBoard.setValue(6, 5, 2);
-        sudokuBoard.setValue(0, 6, 6);
-        sudokuBoard.setValue(4, 6, 9);
-        sudokuBoard.setValue(6, 6, 4);
-        sudokuBoard.setValue(7, 6, 5);
-        sudokuBoard.setValue(2, 7, 2);
-        sudokuBoard.setValue(4, 7, 5);
-        sudokuBoard.setValue(7, 7, 6);
-        sudokuBoard.setValue(0, 8, 4);
-        sudokuBoard.setValue(2, 8, 3);
-        sudokuBoard.setValue(5, 8, 6);
-        sudokuBoard.setValue(7, 8, 9);
-        sudokuBoard.setValue(8, 8, 7);
+        SudokuBoard sudokuBoard = createInvalidSudokuBord();
         SudokuSolver sudokuSolver = new SudokuSolver();
-        SudokuResult sudokuResult = null;
         printSudokuBoard(sudokuBoard);
         //WHEN
-        try {
-            sudokuResult = sudokuSolver.resolveSudoku(sudokuBoard);
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        SudokuResult sudokuResult = sudokuSolver.resolveSudoku(sudokuBoard);
+        printSudokuBoard(sudokuSolver.getResolvedSudoku());
+        //THEN
+        assertEquals(UNSOLVED, sudokuResult);
+    }
+
+    @Test
+    public void shouldResolveSimpleSudokuWithoutUsingRecursion() {
+        //GIVEN
+        SudokuBoard sudokuBoard = createSimpleSudokuBoard();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        printSudokuBoard(sudokuBoard);
+        //WHEN
+        SudokuResult sudokuResult = sudokuSolver.resolveSudoku(sudokuBoard);
         printSudokuBoard(sudokuSolver.getResolvedSudoku());
         //THEN
         assertEquals(SOLVED, sudokuResult);
     }
 
     @Test
-    public void shouldResolveSudokuUsingRecursion() {
+    public void shouldResolveSudokuUsingRecursionMediumDifficulty() {
         //GIVEN
-        SudokuBoard sudokuBoard = new SudokuBoard();
-        sudokuBoard.setValue(1, 0, 3);
-        sudokuBoard.setValue(3, 0, 2);
-        sudokuBoard.setValue(5, 0, 6);
-        sudokuBoard.setValue(6, 0, 7);
-        sudokuBoard.setValue(7, 0, 8);
-        sudokuBoard.setValue(2, 1, 2);
-        sudokuBoard.setValue(5, 1, 8);
-        sudokuBoard.setValue(8, 1, 4);
-        sudokuBoard.setValue(8, 2, 5);
-        sudokuBoard.setValue(0, 3, 3);
-        sudokuBoard.setValue(2, 3, 1);
-        sudokuBoard.setValue(5, 3, 5);
-        sudokuBoard.setValue(6, 3, 8);
-        sudokuBoard.setValue(3, 4, 7);
-        sudokuBoard.setValue(5, 4, 4);
-        sudokuBoard.setValue(2, 5, 6);
-        sudokuBoard.setValue(3, 5, 3);
-        sudokuBoard.setValue(6, 5, 9);
-        sudokuBoard.setValue(8, 5, 7);
-        sudokuBoard.setValue(0, 6, 8);
-        sudokuBoard.setValue(0, 7, 7);
-        sudokuBoard.setValue(3, 7, 1);
-        sudokuBoard.setValue(6, 7, 4);
-        sudokuBoard.setValue(1, 8, 9);
-        sudokuBoard.setValue(2, 8, 5);
-        sudokuBoard.setValue(3, 8, 8);
-        sudokuBoard.setValue(5, 8, 3);
-        sudokuBoard.setValue(7, 8, 7);
+        SudokuBoard sudokuBoard = createSudokuBordThatAlgorithmWillSolveUsingRecursionMediumDifficulty();
         SudokuSolver sudokuSolver = new SudokuSolver();
-        SudokuResult sudokuResult = null;
         printSudokuBoard(sudokuBoard);
         //WHEN
-        try {
-            sudokuResult = sudokuSolver.resolveSudoku(sudokuBoard);
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        SudokuResult sudokuResult = sudokuSolver.resolveSudoku(sudokuBoard);
         printSudokuBoard(sudokuSolver.getResolvedSudoku());
         //THEN
         assertEquals(SOLVED, sudokuResult);
     }
 
     @Test
-    public void shouldResolveSudokuLevelHard() {
+    public void shouldResolveSudokuUsingRecursionHardDifficulty() {
         //GIVEN
-        SudokuBoard sudokuBoard = new SudokuBoard();
-        sudokuBoard.setValue(8, 1, 4);
-        sudokuBoard.setValue(8, 2, 5);
-        sudokuBoard.setValue(0, 3, 3);
-        sudokuBoard.setValue(2, 3, 1);
-        sudokuBoard.setValue(5, 3, 5);
-        sudokuBoard.setValue(6, 3, 8);
-        sudokuBoard.setValue(3, 4, 7);
-        sudokuBoard.setValue(5, 4, 4);
-        sudokuBoard.setValue(2, 5, 6);
-        sudokuBoard.setValue(3, 5, 3);
-        sudokuBoard.setValue(6, 5, 9);
-        sudokuBoard.setValue(8, 5, 7);
-        sudokuBoard.setValue(0, 6, 8);
-        sudokuBoard.setValue(0, 7, 7);
-        sudokuBoard.setValue(3, 7, 1);
-        sudokuBoard.setValue(6, 7, 4);
-        sudokuBoard.setValue(1, 8, 9);
-        sudokuBoard.setValue(2, 8, 5);
-        sudokuBoard.setValue(3, 8, 8);
+        SudokuBoard sudokuBoard = createSudokuBordThatAlgorithmWillSolveUsingRecursionHardDifficulty();
         SudokuSolver sudokuSolver = new SudokuSolver();
-        SudokuResult sudokuResult = null;
         printSudokuBoard(sudokuBoard);
         //WHEN
-        try {
-            sudokuResult = sudokuSolver.resolveSudoku(sudokuBoard);
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        SudokuResult sudokuResult = sudokuSolver.resolveSudoku(sudokuBoard);
         printSudokuBoard(sudokuSolver.getResolvedSudoku());
         //THEN
         assertEquals(SOLVED, sudokuResult);
